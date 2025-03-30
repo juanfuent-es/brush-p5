@@ -5,6 +5,21 @@ export default class Brush {
         this.traces = [];
         this.totalPoints = totalPoints;
         this.fillColor = fillColor;
+        this.pointer_pressed = false;
+        this.pointerEvents();
+    }
+
+    pointerEvents() {
+        // Eventos para manejar el brush
+        window.addEventListener('pointerdown', () => {
+            this.pointer_pressed = this.addTrace();
+        });
+
+        window.addEventListener('pointerup', () => {
+            if (this.pointer_pressed) {
+                this.pointer_pressed = null;
+            }
+        });
     }
 
     addTrace() {
@@ -13,11 +28,10 @@ export default class Brush {
         return trace;
     }
 
-    update(target) {
-        this.traces.forEach((trace) => trace.update(target));
-    }
-
-    draw() {
+    draw(target) {
+        if (this.pointer_pressed) {
+            this.traces.forEach((trace) => trace.update(target));
+        }
         this.traces.forEach((trace) => trace.draw());
     }
 }
