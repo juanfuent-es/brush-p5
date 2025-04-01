@@ -1,55 +1,52 @@
-import Thread from "./js/components/thread.js";
-let lightBrush;
-var a = 0;
-class LightBrush {
-  constructor(args) {
-    if (args === undefined) args = {};
-    this.bg = 'rgba(12,12,12,0.1)';
-    this.threads = [];
-    this.mouse = createVector(mouseX, mouseY);
-    this.totalThreads = args.threads || 20;
-    this.setup();
-  }
-
-  setup() {
-    this.threads = [];
-    for (let i = 0; i < this.totalThreads; i++) {
-      const _thread = new Thread({
-        // spring: (Math.sin(i * 3) * 0.1) + 0.4
-        spring: (Math.sin(i * 3) * .25) + .5
-      });
-      this.threads.push(_thread);
+class Point {
+    constructor(args={}) {
+        this.position = createVector(args.x || 0, args.y || 0);
+        this.fill = args.fill || 'white';
+        this.stroke = args.stroke || 'black';
+        this.size = args.size || 10;
+        this.opacity = args.opacity || 1;
+        this.friction = args.friction || 0.1;
     }
-  }
 
-  draw(time) {
-    background(this.bg);
-    this.mouse.x = mouseX;
-    this.mouse.y = mouseY;
-    for (let i = 0; i < this.threads.length; i++) {
-      const thread = this.threads[i];
-      thread.update(this.mouse);
-      thread.render(time);
+    draw() {
+        fill(this.fill);
+        noStroke();
+        ellipse(this.position.x, this.position.y, this.size, this.size);
     }
-  }
+
+    update(mouse) {
+        this.position.x = mouseX;
+        this.position.y = mouseY;
+    }
 }
-// p5.js setup function
-window.setup = () => {
-  createCanvas(windowWidth, windowHeight);
-  lightBrush = new LightBrush({
-    threads: 3
-  });
-  background('black');
+
+let point;
+
+window.setup = (event) => {
+    point = new Point();
+    createCanvas(windowWidth, windowHeight);
 };
 
-// p5.js draw function
-window.draw = () => {
-  const time = millis() / 1000; // Time in seconds
-  lightBrush.draw(time);
+window.draw = (event) => {
+    background('black');
+    point.update();
+    point.draw();
 };
 
-// p5.js windowResized function
-window.windowResized = () => {
-  resizeCanvas(windowWidth, windowHeight);
-  background('black'); // Reset background after resizing
+window.windowResized = (event) => {
+    resizeCanvas(windowWidth, windowHeight);
+    background('black');
+};
+
+// eventos de mouse
+
+window.mousePressed = (e) => {
+    // console.log(e);
+};
+window.mouseMoved = (e) => {
+    // console.log(e);
+};
+
+window.mouseReleased = (e) => {
+    // console.log(e);
 };

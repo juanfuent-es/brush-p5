@@ -1,5 +1,4 @@
 import Point from "./point.js";
-
 export default class Trace {
     constructor(args = {}) {
         this.points = [];
