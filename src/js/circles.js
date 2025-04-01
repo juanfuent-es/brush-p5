@@ -1,6 +1,6 @@
 import Point from "./components/point.js";
 
-export default class MouseCursor {
+export default class Circles {
     constructor(args = {}) {
         this.total_points = args.total_points || 10;
         this.palette = args.palette || ['#A1A2A6', '#024959', '#F2C12E', '#F2AE30', '#593E25'];
