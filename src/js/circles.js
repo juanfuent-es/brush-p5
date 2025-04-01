@@ -5,7 +5,7 @@ export default class Circles {
         this.total_points = args.total_points || 10;
         this.palette = args.palette || ['#A1A2A6', '#024959', '#F2C12E', '#F2AE30', '#593E25'];
         this.bg = this.palette[Math.floor(Math.random() * this.palette.length)];
-        this.points = [];
+        this.circles = [];
         for (let i = 1; i <= this.total_points; i++) {
             const randomColor = this.palette[Math.floor(Math.random() * this.palette.length)];
             const point = new Point({
@@ -15,15 +15,15 @@ export default class Circles {
                 friction: i * 0.1,
                 alpha: 150
             })
-            this.points.push(point);
+            this.circles.push(point);
         }
     }
 
     draw() {
         background(this.bg);
-        for (let i = 0; i < this.points.length; i++) {
+        for (let i = 0; i < this.circles.length; i++) {
             blendMode(HARD_LIGHT);
-            this.points[i].draw();
+            this.circles[i].draw();
         }
     }
 }
