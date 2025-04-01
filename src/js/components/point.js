@@ -1,17 +1,28 @@
 export default class Point {
-  constructor(args = {}) {
-    this.position = createVector(args.x || 0, args.y || 0);
-    this.fill = args.fill || 'black';
-    this.friction = args.friction || 0.1;
-  }
+    constructor(args={}) {
+        this.position = createVector(args.x || 0, args.y || 0);
+        this.fill = color(args.fill || 'white');
+        this.stroke = args.stroke || false;
+        this.alpha = args.alpha || 1;
+        this.size = args.size || 10;
+        this.friction = args.friction || 0.1;
+    }
 
-  update(target) {
-    this.position.x += (target.x - this.position.x) * this.friction;
-    this.position.y += (target.y - this.position.y) * this.friction;
-  }
+    draw() {
+        this.update();
+        this.fill.setAlpha(this.alpha)
+        fill(this.fill);
+        if (this.stroke) {
+            stroke(this.stroke);
+        } else {
+            noStroke();
+        }
+        // stroke(this.stroke);
+        ellipse(this.position.x, this.position.y, this.size, this.size);
+    }
 
-  draw() {
-    fill(this.fill);
-    // ellipse(this.position.x, this.position.y, 10, 10);
-  }
+    update() {
+        this.position.x += (mouseX - this.position.x) * this.friction;
+        this.position.y += (mouseY - this.position.y) * this.friction;
+    }
 }

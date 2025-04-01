@@ -1,41 +1,20 @@
-class Point {
-    constructor(args={}) {
-        this.position = createVector(args.x || 0, args.y || 0);
-        this.fill = args.fill || 'white';
-        this.stroke = args.stroke || 'black';
-        this.size = args.size || 10;
-        this.opacity = args.opacity || 1;
-        this.friction = args.friction || 0.1;
-    }
+import MouseCursor from "./js/mouse_cursor.js";
 
-    draw() {
-        fill(this.fill);
-        noStroke();
-        ellipse(this.position.x, this.position.y, this.size, this.size);
-    }
-
-    update(mouse) {
-        this.position.x = mouseX;
-        this.position.y = mouseY;
-    }
-}
-
-let point;
-
+let circles;
 window.setup = (event) => {
-    point = new Point();
+    circles = new MouseCursor({
+        palette: ['#A1A2A6', '#024959', '#F2C12E', '#F2AE30', '#593E25'],
+        total_points: 10
+    });
     createCanvas(windowWidth, windowHeight);
 };
 
 window.draw = (event) => {
-    background('black');
-    point.update();
-    point.draw();
+    circles.draw()
 };
 
 window.windowResized = (event) => {
     resizeCanvas(windowWidth, windowHeight);
-    background('black');
 };
 
 // eventos de mouse
