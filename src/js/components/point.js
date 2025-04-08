@@ -3,7 +3,7 @@ export default class Point {
         this.position = createVector(args.x || 0, args.y || 0);
         this.fill = color(args.fill || 'white');
         this.stroke = args.stroke || false;
-        this.alpha = args.alpha || 1;
+        this.alpha = args.alpha || 255;
         this.size = args.size || 10;
         this.friction = args.friction || 0.1;
     }
