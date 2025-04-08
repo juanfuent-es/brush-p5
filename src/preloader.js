@@ -7,13 +7,14 @@ export default class Preloader {
         gsap.to(this.preloader, {
             duration: 1,
             y:'0%',
-            ease: 'power2.out'
+            display: 'flex',
+            ease: 'power2.in'
         });
     }
 
     hide() {
         gsap.to(this.preloader, {
-            duration: 1,
+            duration: .45,
             delay: .5,
             y:'-100%',
             display: 'none',
