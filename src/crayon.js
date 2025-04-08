@@ -1,6 +1,10 @@
+import Preloader from "./preloader.js";
 import Line from "./js/crayon/line.js";
 let lines = [];
 let _line;
+
+const redoBtn = document.getElementById('redo-btn');
+const eraseBtn = document.getElementById('erase-btn');
 
 window.setup = (event) => {
     createCanvas(windowWidth, windowHeight);
@@ -23,3 +27,7 @@ window.draw = (event) => {
 window.windowResized = (event) => {
     resizeCanvas(windowWidth, windowHeight);
 };
+window.addEventListener('load', () => {
+    const preloader = new Preloader();
+    preloader.hide();
+});
