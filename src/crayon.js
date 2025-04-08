@@ -6,9 +6,17 @@ let _line;
 const redoBtn = document.getElementById('redo-btn');
 const eraseBtn = document.getElementById('erase-btn');
 
+redoBtn.addEventListener('click', () => {
+});
+
+eraseBtn.addEventListener('click', () => {
+    lines = [];
+});
+
 window.setup = (event) => {
     createCanvas(windowWidth, windowHeight);
 };
+
 window.mousePressed = (event) => {
     _line = new Line({
         stroke: color(random(255), random(255), random(255)),
