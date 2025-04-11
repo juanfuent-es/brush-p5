@@ -4,7 +4,18 @@ body {
   overflow: hidden;
 }
 
+button {
+  border-radius: 50%;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
 menu {
+  display: flex;
+  gap: 1em;
+  text-align: center;
   position: absolute;
   bottom: 0;
   width: 100%;

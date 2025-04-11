@@ -1,4 +1,4 @@
-import Thread from "./js/components/thread.js";
+import Thread from "./js/light/thread.js";
 let lightBrush;
 var a = 0;
 class LightBrush {

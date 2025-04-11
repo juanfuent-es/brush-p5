@@ -1,4 +1,4 @@
-import Point from "./components/point.js";
+import Point from "./point.js";
 
 export default class Circles {
     constructor(args = {}) {
