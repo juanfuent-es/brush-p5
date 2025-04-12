@@ -1,4 +1,4 @@
-export default class Line {
+export default class Path {
     constructor(args = {}) {
         // Estas son propiedades de la clase Line
         this.points = [];

@@ -16,7 +16,11 @@ export default class Preloader {
         gsap.to(this.preloader, {
             duration: .45,
             delay: .5,
-            y:'-100%',
+            // x:'-100%',
+            // y:'-100%',
+            scaleX: 1.5,
+            scaleY: 1.5,
+            opacity: 0,
             display: 'none',
             ease: 'power2.out'
         });

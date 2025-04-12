@@ -1,9 +1,9 @@
 
-import Line from "./line.js";
+import Path from "./path.js";
 export default class Crayon {
     constructor() {
-        this.lines = []
-        this.current_line = null
+        this.paths = [] // array of lines
+        this.current_path = null
         // buttons
         this.redoBtn = document.getElementById('redo-btn');
         this.eraseBtn = document.getElementById('erase-btn');
@@ -25,23 +25,23 @@ export default class Crayon {
     }
     // reset lines
     erase() {
-        this.lines = []
+        this.paths = []
     }
 
     addLine() {
-        this.current_line = new Line({
+        this.current_path = new Path({
             stroke: color(random(255), random(255), random(255)),
             strokeWeight: random(1, 10),
         });
-        this.lines.push(this.current_line);
+        this.paths.push(this.current_path);
     }
 
     addPoint(event) {
         const point = createVector(event.x, event.y);
-        this.current_line.addPoint(point);
+        this.current_path.addPoint(point);
     }
 
     draw() {
-        this.lines.forEach(line => line.draw());
+        this.paths.forEach(line => line.draw());
     }
 }
