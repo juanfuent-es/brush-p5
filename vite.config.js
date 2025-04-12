@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '', // Usar rutas relativas
+  base: './', // Usar rutas relativas
   build: {
     rollupOptions: {
       input: {
