@@ -1,5 +1,7 @@
 export default class Preloader {
-    constructor() {
+    constructor(args={}) {
+        this.duration = args.duration || 1;
+        this.delay = args.delay || .5;
         this.preloader = document.getElementById('preloader');
     }
 
@@ -14,8 +16,8 @@ export default class Preloader {
 
     hide() {
         gsap.to(this.preloader, {
-            duration: .45,
-            delay: .5,
+            duration: this.duration,
+            delay: this.delay,
             // x:'-100%',
             // y:'-100%',
             scaleX: 1.5,
