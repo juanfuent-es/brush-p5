@@ -25,7 +25,7 @@ export default class DigitalWorld {
         Matter.Runner.run(this.engine);
         Matter.Render.run(this.render);
 
-        this.adjustGround();
+        this.adjustWalls();
         // Escuchar eventos
         this.setupEvents();
     }
@@ -56,25 +56,32 @@ export default class DigitalWorld {
     resize() {
         this.render.options.width = window.innerWidth;
         this.render.options.height = window.innerHeight;
-        this.adjustGround();
+        this.adjustWalls();
     }
 
     /* Crea o actualiza un cuerpo rígido estático que actúa como el suelo. */
-    adjustGround() {
-        if (!this.ground) {
-            this.ground = Matter.Bodies.rectangle(1, 1, 1, 1, { isStatic: true });
-            Matter.World.add(this.world, this.ground);
+    adjustWalls() {
+        // Eliminar las paredes existentes si ya están definidas
+        if (this.walls) {
+            this.walls.forEach((wall) => Matter.World.remove(this.world, wall));
         }
-        Matter.Body.setPosition(this.ground, {
-            x: window.innerWidth / 2,
-            y: window.innerHeight,
-        });
-        Matter.Body.setVertices(this.ground, [
-            { x: 0, y: 0 },
-            { x: window.innerWidth, y: 0 },
-            { x: window.innerWidth, y: 10 },
-            { x: 0, y: 10 },
-        ]);
+        // Obtener el alto del footer
+        const footer = document.querySelector('#main-footer');
+        const footerHeight = footer ? footer.offsetHeight : 0;
+
+        // Crear nuevas paredes
+        const thickness = 10; // Grosor de las paredes
+        const width = window.innerWidth;
+        const height = window.innerHeight - footerHeight; // Altura ajustada para excluir el footer
+
+        const topWall = Matter.Bodies.rectangle(width / 2, -thickness / 2, width, thickness, { isStatic: true });
+        const bottomWall = Matter.Bodies.rectangle(width / 2, height + thickness / 2, width, thickness, { isStatic: true });
+        const leftWall = Matter.Bodies.rectangle(-thickness / 2, height / 2, thickness, height, { isStatic: true });
+        const rightWall = Matter.Bodies.rectangle(width + thickness / 2, height / 2, thickness, height, { isStatic: true });
+
+        // Agregar las paredes al mundo
+        this.walls = [topWall, bottomWall, leftWall, rightWall];
+        Matter.World.add(this.world, this.walls);
     }
 
     /**
