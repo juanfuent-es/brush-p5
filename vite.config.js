@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   base: './', // Usar rutas relativas
@@ -7,9 +8,13 @@ export default defineConfig({
       input: {
         main: './index.html',
         crayon: './crayon.html',
+        draw_drop: './draw-drop.html',
         circles: './circles.html',
         light: './light.html',
       },
     },
   },
+  plugins: [
+    tailwindcss()
+  ],
 });
