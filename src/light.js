@@ -1,12 +1,10 @@
 import Thread from "./js/light/thread.js";
 let lightBrush;
-var a = 0;
+const BACKGROUND = 'rgba(12,12,12,0.15)';
 class LightBrush {
   constructor(args) {
     if (args === undefined) args = {};
-    this.bg = 'rgba(12,12,12,0.1)';
     this.threads = [];
-    this.mouse = createVector(mouseX, mouseY);
     this.totalThreads = args.threads || 20;
     this.setup();
   }
@@ -16,19 +14,16 @@ class LightBrush {
     for (let i = 0; i < this.totalThreads; i++) {
       const _thread = new Thread({
         // spring: (Math.sin(i * 3) * 0.1) + 0.4
-        spring: (Math.sin(i * 3) * .25) + .5
+        spring: (Math.sin(i * 2) * .15) + .5
       });
       this.threads.push(_thread);
     }
   }
 
   draw(time) {
-    background(this.bg);
-    this.mouse.x = mouseX;
-    this.mouse.y = mouseY;
     for (let i = 0; i < this.threads.length; i++) {
       const thread = this.threads[i];
-      thread.update(this.mouse);
+      thread.update();
       thread.render(time);
     }
   }
@@ -44,8 +39,9 @@ window.setup = () => {
 
 // p5.js draw function
 window.draw = () => {
-  const time = millis() / 1000; // Time in seconds
-  lightBrush.draw(time);
+  background(BACKGROUND);
+  blendMode(HARD_LIGHT);
+  lightBrush.draw();
 };
 
 // p5.js windowResized function

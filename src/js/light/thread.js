@@ -18,15 +18,16 @@ export default class Thread {
         }
     }
 
-    update(_position) {
+    update() {
+        let pos = createVector(mouseX, mouseY);
         let spring = this.spring;
         for (let i = 0; i < this.vertex.length; i++) {
             const vtx = this.vertex[i];
-            vtx.integration(_position, spring);
+            vtx.integration(pos, spring);
             vtx.vel.mult(0.5);
             vtx.pos.add(vtx.vel);
             spring *= 0.99;
-            _position = this.vertex[i].pos;
+            pos = this.vertex[i].pos;
         }
     }
 
@@ -37,7 +38,8 @@ export default class Thread {
         return `hsl(${hue}, ${sat}%, ${light}%)`;
     }
 
-    render(t) {
+    render() {
+        const t = millis() / 10000; // Time in seconds
         let a = this.vertex[0];
         let b = this.vertex[1];
 
