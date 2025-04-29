@@ -25,7 +25,10 @@ export default class Pencil {
         this.eraseBtn.addEventListener("click", () => this.erase());
 
         // Evento para cambiar el color de relleno
-        this.colorInput.addEventListener("change", (event) => this.updateColor(event));
+        this.colorInput.addEventListener("input", (event) => {
+            console.log("event", event)
+            this.updateColor(event)
+        });
     }
 
     updateColor(event) {
@@ -39,14 +42,12 @@ export default class Pencil {
         const footer = document.querySelector('#main-footer'); // Seleccionar el footer
         const isFooterHovered = footer.matches(':hover')
 
-        if (isFooterHovered) {
-            console.log("El cursor está sobre el footer. No se inicializa una nueva forma.");
-            return false; // Salir sin inicializar una nueva forma
+        if (!isFooterHovered) {
+            // Inicializar una nueva forma si el cursor no está sobre el footer
+            this.active_shape = new Shape();
+            this.active_shape.fillColor = this.fillColor; // Asignar el color actual al nuevo shape
+            this.shapes.push(this.active_shape);
         }
-        // Inicializar una nueva forma si el cursor no está sobre el footer
-        this.active_shape = new Shape();
-        this.active_shape.fillColor = this.fillColor; // Asignar el color actual al nuevo shape
-        this.shapes.push(this.active_shape);
     }
 
     /**

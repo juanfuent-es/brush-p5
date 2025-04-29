@@ -9,7 +9,7 @@ export default class DigitalWorld {
         this.world = this.engine.world;
         this.bodies = []; // Lista de cuerpos rígidos
         this.ground = null; // Suelo del mundo físico
-
+        // this.engine.world.gravity.y = 0.5; // Gravedad inicial
         // Configurar el renderizador (opcional)
         this.render = Matter.Render.create({
             element: document.body,
@@ -39,7 +39,9 @@ export default class DigitalWorld {
         // Escuchar el evento de cambio de gravedad
         const gravityInput = document.querySelector("#gravity-input");
         if (gravityInput) {
-            gravityInput.addEventListener("input", (event) => this.changeGravity(event.target.value));
+            gravityInput.addEventListener("input", (event) => {
+                this.changeGravity(event.target.value)
+            });
         }
     }
 
@@ -117,7 +119,6 @@ export default class DigitalWorld {
                 restitution,
                 friction,
             });
-
             // Agregar el cuerpo al mundo
             Matter.World.add(this.world, body);
             this.bodies.push(body); // Guardar el cuerpo para sincronizarlo con p5.js

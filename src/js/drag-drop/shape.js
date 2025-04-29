@@ -1,10 +1,10 @@
 import { simplifyPath } from "../utils/simplify-helper.js";
 
 export default class Shape {
-    constructor() {
+    constructor(args={}) {
         this.points = []; // Lista de puntos del trazo
-        this.strokeColor = 'white';
-        this.fillColor = 'red';
+        this.strokeColor = args.strokeColor || 'white';
+        this.fillColor = args.fillColor || 'red';
     }
 
     addPoint(x, y) {
