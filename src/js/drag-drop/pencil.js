@@ -65,7 +65,7 @@ export default class Pencil {
         if (!this.isShapeValid(this.active_shape)) {
             return this.discardShape();
         }
-        this.active_shape.simplify(2); // Simplifica el trazo al finalizar
+        this.active_shape.simplify(1); // Simplifica el trazo al finalizar
         // Disparar el evento personalizado 'finishShape' para crear un 'body' en matter
         this.dispatchFinishShapeEvent(this.active_shape);
         // Resetear el Shape activo
