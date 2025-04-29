@@ -1,0 +1,1 @@
+Toma el svg de "#logo" y conviérte cada una de los paths dentro del svg y conviértelo en un 'body' de matter para implementarlo 
