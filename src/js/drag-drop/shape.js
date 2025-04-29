@@ -17,7 +17,7 @@ export default class Shape {
 
     draw(t) {
         fill(this.fillColor);
-        stroke(0);
+        noStroke();
         beginShape();
         this.points.forEach(p => vertex(p.x, p.y));
         endShape(CLOSE);

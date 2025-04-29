@@ -1,11 +1,14 @@
+import Preloader from "./js/components/preloader.js"
 import Pencil from "./js/drag-drop/pencil.js";
 import DigitalWorld from "./js/drag-drop/digital-world.js";
 
+const preloader = new Preloader();
 const magic_crayon = new Pencil();
 const world = new DigitalWorld();
 
 window.setup = (event) => createCanvas(windowWidth, windowHeight);
 
+window.addEventListener("load", () => preloader.hide());
 // Redimensionar el canvas y el renderizador de Matter.js
 window.windowResized = (event) => {
     resizeCanvas(windowWidth, windowHeight);

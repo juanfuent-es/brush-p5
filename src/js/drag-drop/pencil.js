@@ -7,7 +7,8 @@ export default class Pencil {
         this.fillColor = "#000000"; // Color de relleno por defecto
         this.redoBtn = document.getElementById("redo-btn");
         this.eraseBtn = document.getElementById("erase-btn");
-        this.colorInput = document.getElementById("color-input"); // Input de color
+        this.colorLabel = document.querySelector("label#color-label");
+        this.colorInput = document.querySelector("input#color-input");
 
         this.events();
     }
@@ -24,14 +25,25 @@ export default class Pencil {
         this.eraseBtn.addEventListener("click", () => this.erase());
 
         // Evento para cambiar el color de relleno
-        this.colorInput.addEventListener("change", (event) => {
-            this.fillColor = event.target.value; // Actualizar el color de relleno
-            console.log("Nuevo color de relleno:", this.fillColor);
-        });
+        this.colorInput.addEventListener("change", (event) => this.updateColor(event));
+    }
+
+    updateColor(event) {
+        this.fillColor = event.target.value; // Actualizar el color de relleno
+        console.log("Nuevo color de relleno:", this.fillColor);
+        this.colorLabel.style.backgroundColor = this.fillColor;
     }
 
     /* Inicia un nuevo trazo. */
     startShape() {
+        const footer = document.querySelector('#main-footer'); // Seleccionar el footer
+        const isFooterHovered = footer.matches(':hover')
+
+        if (isFooterHovered) {
+            console.log("El cursor está sobre el footer. No se inicializa una nueva forma.");
+            return false; // Salir sin inicializar una nueva forma
+        }
+        // Inicializar una nueva forma si el cursor no está sobre el footer
         this.active_shape = new Shape();
         this.active_shape.fillColor = this.fillColor; // Asignar el color actual al nuevo shape
         this.shapes.push(this.active_shape);
@@ -49,7 +61,8 @@ export default class Pencil {
 
     /* Finaliza el trazo activo */
     endShape() {
-        if (this.active_shape && !this.isShapeValid(this.active_shape)) {
+        if (!this.active_shape) return;
+        if (!this.isShapeValid(this.active_shape)) {
             return this.discardShape();
         }
         this.active_shape.simplify(2); // Simplifica el trazo al finalizar
