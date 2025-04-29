@@ -20,8 +20,9 @@ export default class Intro {
         }, 0).from('.intro-item', {
             y: 30,
             opacity: 0,
-            ease: 'power2.inout'
-        }, 0)
+            ease: 'power2.inout',
+            stagger: 0.1
+        }, .5)
     }
 
     show() {
