@@ -37,16 +37,10 @@ export default class Preloader {
     }
 
     show() {
-        gsap.to(this.preloader, {
-            duration: this.duration,
-            delay: this.delay,
-            y: '0%',
-            display: 'flex',
-            ease: 'power2.in'
-        });
+        return this.timeline.duration(.65).reverse()
     }
 
     hide() {
-        return this.timeline.play()
+        return this.timeline.duration(1.2).play()
     }
 }
