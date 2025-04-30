@@ -22,7 +22,7 @@ export default class Intro {
             opacity: 0,
             ease: 'power2.inout',
             stagger: 0.1
-        }, .5).to("#footer-controls", {
+        }, .75).to("#footer-controls", {
             display: 'none',
             opacity: 0,
             y: '100%'
@@ -30,7 +30,7 @@ export default class Intro {
     }
 
     show() {
-        return this.tl.play()
+        return this.tl.duration(1).play()
     }
 
     hide() {

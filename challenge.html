@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drag & Draw | 2D Vector Drawing with p5.js</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>{ Drag & Draw }</h1>
+      <p>
+        <strong>Code Challenge:</strong> Dibujo vectorial 2D con p5.js <br>
+        <small><b>💀 Deadline: Martes 29 de Abril del 2025 - Final del día</b></small>
+      </p>
+    </header>
+    <section>
+      <h2>description()</h2>
+      <p>Desarrolla una aplicación web interactiva con <strong>p5.js</strong> que permita a los usuarios dibujar, editar, borrar trazos y más funcionalidades sobre un <a href="https://p5js.org/reference/p5/createCanvas/" target="_blank"><u><i>&#60;canvas&#62;</i></u></a>.</p>
+    </section>
+    <section>
+      <h2>requirements()</h2>
+      <ul>
+        <li>Utiliza clases para representar los trazos. [Programación Orientada a Objetos]</li>
+        <li>Emplea arreglos para almacenar objetos, variables o instancias.<br>
+          <small><a href="https://www.w3schools.com/js/js_arrays.asp" target="_blank">W3Schools: Arrays</a></small>
+        </li>
+        <li>Implementa eventos de mouse y pantallas táctiles para la interacción del usuario.<br>
+          <small>
+            <a href="https://p5js.org/reference/#Mouse" target="_blank">mouse</a>,
+            <a href="https://p5js.org/reference/#Keyboard" target="_blank">keyboard</a>,
+            <a href="https://p5js.org/reference/#Touch" target="_blank">touch</a>
+          </small>
+        </li>
+        <li>Asegura que el <code>&lt;canvas&gt;</code> y el diseño general sean responsive.</li>
+        <li>Utiliza un HTML semántico y accesible.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>methods()</h2>
+      <p>Implementa al menos cuatro funcionalidades clave para enriquecer la experiencia de usuario. Puedes elegir entre
+        las siguientes opciones o proponer nuevas:</p>
+      <ul>
+        <li>Botones o atajos de teclado para:
+          <ul>
+            <li>Deshacer [Ctrl+Z]</li>
+            <li>Rehacer [Ctrl+Y]</li>
+            <li>Limpiar el lienzo [Ctrl+Del]</li>
+          </ul>
+        </li>
+        <li>Selector de color para el pincel mediante:
+          <ul>
+            <li><i>&#60;input type="color"&#62;</i><br><input type="color">
+              <br><small><a href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/input/color"
+                  target="_blank">Documentación de input color</a></small>
+              <br><small><a href="https://codepen.io/search/pens?q=color+input" target="_blank">Ejemplos en
+                  Codepen</a></small>
+            </li>
+          </ul>
+        </li>
+        <li>Selector de grosor del pincel mediante:
+          <ul>
+            <li><i>&#60;input type="range"&#62;</i><br><input type="range">
+              <br><small><a href="https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/input/range"
+                  target="_blank">Documentación de input range</a></small>
+              <br><small><a href="https://codepen.io/search/pens?q=range+slider" target="_blank">Ejemplos en
+                  Codepen</a></small>
+            </li>
+          </ul>
+        </li>
+        <li>Botón para exportar el dibujo como imagen (.png)<br><small><a
+              href="https://p5js.org/reference/p5/saveCanvas/" target="_blank">@see: saveCanvas()</a></small></li>
+        <li>Botón para exportar el dibujo en formato vectorial (.svg)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>interface()</h2>
+      <ul>
+        <li>Utiliza <i>&#60;button&#62;</i> para ejecutar acciones en JavaScript.</li>
+        <li>Utiliza <i>&#60;input&#62;</i> para la entrada de datos del usuario.</li>
+        <li>Mantén la interfaz simple e intuitiva para facilitar su uso.</li>
+        <li>Asegura un diseño <strong>responsive</strong> que se adapte a diferentes dispositivos.</li>
+        <li>Incluye una barra de herramientas con botones grandes y accesibles.</li>
+        <li>Utiliza combinaciones de colores con buen contraste para mejorar la accesibilidad.</li>
+        <li>Selecciona una tipografía legible y con estilo coherente.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>tips()</h2>
+      <ul>
+        <li>Utiliza como punto de partida el ejercicio desarrollado en clase <a href="crayon.html"
+            target="_blank">Crayon</a></li>
+          <li>Si una funcionalidad te parece compleja, divídela en partes más pequeñas y utiliza pseudocódigo.</li>
+          <li>Organiza tu código encapsulando funcionalidades en clases.</li>
+          <li>Prueba tu aplicación en dispositivos móviles para verificar el soporte táctil.</li>
+          <li>Implementa atajos de teclado usando <a href="https://p5js.org/reference/p5/keyPressed/" target="_blank"><u>keyPressed()</u></a>.</li>
+        </ul>
+    </section>
+    <section>
+      <h2>evaluation()</h2>
+      <ul>
+        <li>Funcionalidad general y experiencia de usuario.</li>
+        <li>Calidad del código: estructura, indentación y nomenclatura.</li>
+        <li>Organización del proyecto en carpetas con módulos y clases bien definidos.</li>
+        <li>Diseño, responsividad y accesibilidad:
+          <ul>
+            <li>Uso adecuado del tamaño de tipografía.</li>
+            <li>Tamaño recomendado para tamaño de botones en múltiples dispositivos.</li>
+            <li>Contraste suficiente entre colores. <br>
+              <small><a href="https://color.adobe.com/es/create/color-contrast-analyzer" target="_blank">Verificador de contraste</a></small>
+            </li>
+          </ul>
+        </li>
+        <li>Presencia de metadata y uso de etiquetas semánticas.</li>
+        <li>Originalidad, complejidad y funcionalidad del código entregado.</li>
+        <li>Repositorio y commits en github.</li>
+        <li>Publicación en github pages.</li>
+      </ul>
+    </section>
+    <footer>
+      <p><a href="https://centro.edu.mx/" target="_blank">CENTRO: Diseño, Cine y Televisión</a></p>
+    </footer>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
