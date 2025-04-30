@@ -4,7 +4,6 @@ export default class Preloader {
         this.duration = args.duration || 1;
         this.delay = args.delay || .5;
         this.preloader = document.querySelector('#preloader');
-        this.footer = document.querySelector('#main-footer');
         this.setTL();
     }
 
@@ -19,13 +18,6 @@ export default class Preloader {
             display: 'none',
             ease: 'power2.out'
         }, this.delay)
-        if (this.footer) {
-            this.timeline.from(this.footer, {
-                duration: this.duration / 2,
-                y: '100%',
-                ease: 'power2.out'
-            }, this.duration * .8)
-        }
     }
 
     show() {

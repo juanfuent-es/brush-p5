@@ -18,24 +18,52 @@ export default class DigitalWorld {
                 wireframes: true,
             },
         });
-
+        // Configurar el MouseConstraint
+        this.mouse = Matter.Mouse.create(this.render.canvas);
+        this.mouseConstraint = Matter.MouseConstraint.create(this.engine, {
+            mouse: this.mouse,
+            constraint: {
+                stiffness: 0.2, // Rigidez del arrastre
+                render: {
+                    visible: true, // Ocultar la línea del constraint
+                },
+            },
+        });
+        this.render.mouse = this.mouse; // Asignar el mouse al renderizador
+        // Agregar el MouseConstraint al mundo
+        Matter.World.add(this.world, this.mouseConstraint);
         // Iniciar el motor y el renderizador
         Matter.Runner.run(this.engine);
         Matter.Render.run(this.render);
-
         this.adjustWalls();
-        // Escuchar eventos
         this.setupEvents();
+        this.styleCanvas();
     }
-
+    
+    styleCanvas() {        
+        const canvas = this.render.canvas;
+        canvas.style.opacity = 0;
+        canvas.style.background = "transparent";
+        canvas.style.zIndex = "30"; // Asegurar que esté arriba del canvas de p5.js para eventos de mouse
+    }
+    
     deleteBodies() {
         this.bodies.forEach((body) => {
             Matter.World.remove(this.world, body);
         });
         this.bodies = []; // Limpiar la lista de cuerpos
     }
-
+    
     setupEvents() {
+        // Escuchar el evento de cambio de gravedad
+        this.gravityInput = document.querySelector("#gravity-input");
+        this.gravityLabel = document.querySelector("label#gravity-label");
+        this.gravityLabel.addEventListener("click", () => this.gravityInput.classList.remove("hidden"));
+        this.gravityInput.addEventListener("input", (event) => this.updateGravity(event.target.value));
+        this.gravityInput.addEventListener("pointerup", () => {
+            this.gravityInput.classList.add("hidden")
+        });
+
         window.addEventListener("finishShape", (event) => {
             const shape = event.detail.shape;
             if (shape) {
@@ -44,28 +72,31 @@ export default class DigitalWorld {
             }
         });
 
-        // Escuchar el evento de cambio de gravedad
-        const gravityInput = document.querySelector("#gravity-input");
-        if (gravityInput) {
-            gravityInput.addEventListener("input", (event) => {
-                this.changeGravity(event.target.value)
-            });
-        }
+        // Evento para detectar cuando un cuerpo es arrastrado
+        Matter.Events.on(this.mouseConstraint, "startdrag", (event) => {
+            console.log("Cuerpo arrastrado:", event.body);
+        });
+
+        // Evento para detectar cuando se suelta un cuerpo
+        Matter.Events.on(this.mouseConstraint, "enddrag", (event) => {
+            console.log("Cuerpo soltado:", event.body);
+        });
     }
 
     /**
      * Cambia la gravedad del mundo de Matter.js.
      * @param {number} value - Nuevo valor de gravedad.
      */
-    changeGravity(value) {
+    updateGravity(value) {
         const gravityValue = parseFloat(value);
         this.engine.world.gravity.y = gravityValue;
         console.log("Gravedad actualizada a:", gravityValue);
     }
 
-    resize() {
-        this.render.options.width = window.innerWidth;
-        this.render.options.height = window.innerHeight;
+    resize(_width, _height) {
+        this.render.options.width = _width;
+        this.render.options.height = _height;
+
         this.adjustWalls();
     }
 
@@ -76,7 +107,7 @@ export default class DigitalWorld {
             this.walls.forEach((wall) => Matter.World.remove(this.world, wall));
         }
         // Obtener el alto del footer
-        const footer = document.querySelector('#main-footer');
+        const footer = document.querySelector('#footer-controls');
         const footerHeight = footer ? footer.offsetHeight : 0;
 
         // Crear nuevas paredes
@@ -115,11 +146,13 @@ export default class DigitalWorld {
             centroid.y, // Posición inicial en Y
             vertices,
             {
+                isStatic: false,
                 density: density, // Densidad proporcional al área
                 restitution: restitution, // Elasticidad ajustada
                 friction: friction, // Fricción ajustada
-            }
+            },
         );
+        
 
         if (body) {
             console.log("Propiedades físicas asignadas:", {

@@ -5,16 +5,14 @@ import DigitalWorld from "./js/drag-drop/digital-world.js";
 
 const preloader = new Preloader();
 const intro = new Intro();
-const world = new DigitalWorld();
-const magic_pencil = new Pencil();
-const eraseBtn = document.getElementById("erase-btn");
+const digital_world = new DigitalWorld();
+const magic_pencil = new Pencil(digital_world.world);
 
-eraseBtn.addEventListener("click", () => {
-    world.deleteBodies();
-    magic_pencil.deleteShapes();
-});
-
-window.setup = (event) => createCanvas(windowWidth, windowHeight);
+window.setup = (event) => {
+    createCanvas(windowWidth, windowHeight);
+    const eraseBtn = document.getElementById("erase-btn");
+    eraseBtn.addEventListener("click", () => deleteBodies());
+}
 
 window.addEventListener("load", () => {
     preloader.hide()
@@ -23,12 +21,17 @@ window.addEventListener("load", () => {
 // Redimensionar el canvas y el renderizador de Matter.js
 window.windowResized = (event) => {
     resizeCanvas(windowWidth, windowHeight);
-    world.resize(); // Crear el suelo nuevamente
+    digital_world.resize(windowWidth, windowHeight); // Crear el suelo nuevamente
 };
 
 // Dibujar en cada frame
 window.draw = (event) => {
     background(255); // Limpiar el canvas
-    world.update(); // Actualizar el motor de Matter.js
-    magic_pencil.draw(world.bodies); // Dibujar los trazos
+    digital_world.update(); // Actualizar el motor de Matter.js
+    magic_pencil.draw(digital_world.bodies); // Dibujar los trazos
 };
+
+function deleteBodies() {
+    digital_world.deleteBodies();
+    magic_pencil.deleteShapes();
+}

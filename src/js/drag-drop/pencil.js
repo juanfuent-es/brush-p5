@@ -2,7 +2,9 @@ import Matter from "matter-js";
 import Shape from "./shape.js";
 
 export default class Pencil {
-    constructor() {
+    constructor(_world) {
+        this.world = _world; // Instancia de Matter.js
+        this.strokeEnabled = false; // Habilitar o deshabilitar el trazo
         this.shapes = []; // Lista de trazos (Shape)
         this.active_shape = null; // Trazo activo
         this.fillColor = "#000000"; // Color de relleno por defecto
@@ -16,7 +18,7 @@ export default class Pencil {
     /* Configura los eventos de interacción. */
     events() {
         // Eventos de p5.js
-        window.mousePressed = () => this.startShape();
+        window.mousePressed = (event) => this.startShape(event);
         window.mouseDragged = (event) => this.addPointToShape(event);
         window.mouseReleased = () => this.endShape();
 
@@ -25,18 +27,23 @@ export default class Pencil {
     }
 
     /* Inicia un nuevo trazo. */
-    startShape() {
-        const footer = document.querySelector('#main-footer'); // Seleccionar el footer
-        const isFooterHovered = footer.matches(':hover')
+    startShape(event) {
+        const footer = document.querySelector('#footer-controls');
+        if (event.target.tagName === 'CANVAS') {
+            // Verificar si el cursor está sobre otro cuerpo
+            const mousePosition = { x: mouseX, y: mouseY };
+            const bodiesUnderCursor = Matter.Query.point(this.world.bodies, mousePosition);
 
-        if (!isFooterHovered) {
-            // Inicializar una nueva forma si el cursor no está sobre el footer
-            this.active_shape = new Shape({
-                fillColor: this.fillColor,
-                strokeColor: this.strokeEnabled ? 'black' : null, // Asignar stroke según el estado
-            });
-            this.active_shape.fillColor = this.fillColor; // Asignar el color actual al nuevo shape
-            this.shapes.push(this.active_shape);
+            console.log("Si el cursor no está sobre otro cuerpo, se crea un nuevo Shape.");
+            if (bodiesUnderCursor.length === 0) {
+                // Crear un nuevo Shape si no hay colisión
+                this.active_shape = new Shape({
+                    fillColor: this.fillColor,
+                    strokeColor: this.strokeEnabled ? 'black' : null,
+                });
+                this.shapes.push(this.active_shape);
+            }
+
         }
     }
     /* Alterna entre stroke y noStroke para los shapes */
@@ -135,7 +142,7 @@ export default class Pencil {
     deleteShapes() {
         this.shapes = [];
     }
-     /* Actualiza el color de relleno */
+    /* Actualiza el color de relleno */
     updateColor(event) {
         this.fillColor = event.target.value;
         console.log("Nuevo color de relleno:", this.fillColor);

@@ -22,7 +22,11 @@ export default class Intro {
             opacity: 0,
             ease: 'power2.inout',
             stagger: 0.1
-        }, .5)
+        }, .5).to("#footer-controls", {
+            display: 'none',
+            opacity: 0,
+            y: '100%'
+        }, 0)
     }
 
     show() {
