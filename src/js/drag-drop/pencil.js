@@ -1,3 +1,4 @@
+import Matter from "matter-js";
 import Shape from "./shape.js";
 
 export default class Pencil {
@@ -5,10 +6,7 @@ export default class Pencil {
         this.shapes = []; // Lista de trazos (Shape)
         this.active_shape = null; // Trazo activo
         this.fillColor = "#000000"; // Color de relleno por defecto
-        this.undoBtn = document.getElementById("undo-btn");
         this.toggleStrokeBtn = document.getElementById("toggle-stroke-btn");
-        this.redoBtn = document.getElementById("redo-btn");
-        this.eraseBtn = document.getElementById("erase-btn");
         this.colorLabel = document.querySelector("label#color-label");
         this.colorInput = document.querySelector("input#color-input");
 
@@ -22,17 +20,7 @@ export default class Pencil {
         window.mouseDragged = (event) => this.addPointToShape(event);
         window.mouseReleased = () => this.endShape();
 
-        // Eventos personalizados
-        this.undoBtn.addEventListener("click", () => this.undo());
-        this.redoBtn.addEventListener("click", () => this.redo());
-        this.eraseBtn.addEventListener("click", () => this.erase());
-
-        // Evento para cambiar el color de relleno
-        this.colorInput.addEventListener("input", (event) => {
-            console.log("event", event)
-            this.updateColor(event)
-        });
-        // Evento para hacer toggle del stroke
+        this.colorInput.addEventListener("input", (event) => this.updateColor(event));
         this.toggleStrokeBtn.addEventListener("click", () => this.toggleStroke());
     }
 
@@ -51,7 +39,19 @@ export default class Pencil {
             this.shapes.push(this.active_shape);
         }
     }
-
+    /* Alterna entre stroke y noStroke para los shapes */
+    toggleStroke() {
+        this.strokeEnabled = !this.strokeEnabled;
+        console.log(`Stroke ${this.strokeEnabled ? "habilitado" : "deshabilitado"}`);
+        this.shapes.forEach((shape) => {
+            shape.strokeColor = this.strokeEnabled ? 'black' : null;
+        });
+        if (this.strokeEnabled) {
+            this.toggleStrokeBtn.classList.add("active");
+        } else {
+            this.toggleStrokeBtn.classList.remove("active");
+        }
+    }
     /**
      * Añade un punto al trazo activo.
      * @param {MouseEvent} event - Evento del mouse.
@@ -131,37 +131,13 @@ export default class Pencil {
         this.shapes.forEach((shape, i) => shape.draw(time + i)); // Dibujar los shapes
     }
 
-    // button events
-    /**
-     * Lógica de deshacer
-     */
-    undo() {
-        // Implementar lógica de rehacer
-    }
-    /**
-     * Lógica de rehacer/repetir
-     */
-    redo() {
-        // Implementar lógica de rehacer
-    }
     /* Borra todos los trazos. */
-    erase() {
+    deleteShapes() {
         this.shapes = [];
     }
-    
-    /* Alterna entre stroke y noStroke para los shapes */
-    toggleStroke() {
-        this.strokeEnabled = !this.strokeEnabled; // Cambiar el estado de stroke
-        console.log(`Stroke ${this.strokeEnabled ? "habilitado" : "deshabilitado"}`);
-        if (this.strokeEnabled) {
-            this.toggleStrokeBtn.classList.add("active"); // Añadir clase activa al botón
-        } else {
-            this.toggleStrokeBtn.classList.remove("active"); // Remover clase activa del botón
-        }
-    }
-
+     /* Actualiza el color de relleno */
     updateColor(event) {
-        this.fillColor = event.target.value; // Actualizar el color de relleno
+        this.fillColor = event.target.value;
         console.log("Nuevo color de relleno:", this.fillColor);
         this.colorLabel.style.backgroundColor = this.fillColor;
     }

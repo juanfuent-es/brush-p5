@@ -5,6 +5,7 @@ export default class Shape {
         this.points = []; // Lista de puntos del trazo
         this.strokeColor = args.strokeColor || 'white';
         this.fillColor = args.fillColor || 'red';
+        this.body = null;
     }
 
     addPoint(x, y) {
@@ -13,6 +14,10 @@ export default class Shape {
 
     simplify(epsilon = 5) {
         this.points = simplifyPath(this.points, epsilon); // Simplifica los puntos
+    }
+
+    setBody(body) {
+        this.body = body; // Asigna un cuerpo de Matter.js al Shape
     }
 
     draw(t) {

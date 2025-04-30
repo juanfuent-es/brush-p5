@@ -28,10 +28,20 @@ export default class DigitalWorld {
         this.setupEvents();
     }
 
+    deleteBodies() {
+        this.bodies.forEach((body) => {
+            Matter.World.remove(this.world, body);
+        });
+        this.bodies = []; // Limpiar la lista de cuerpos
+    }
+
     setupEvents() {
         window.addEventListener("finishShape", (event) => {
             const shape = event.detail.shape;
-            if (shape) return this.createBody(shape.points);
+            if (shape) {
+                const body = this.createBody(shape.points);
+                shape.setBody(body); // Asignar el cuerpo al shape
+            }
         });
 
         // Escuchar el evento de cambio de gravedad
@@ -121,6 +131,7 @@ export default class DigitalWorld {
             Matter.World.add(this.world, body);
             this.bodies.push(body); // Guardar el cuerpo para sincronizarlo con p5.js
         }
+        return body;
     }
 
     /**

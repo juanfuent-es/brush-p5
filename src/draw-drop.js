@@ -5,8 +5,14 @@ import DigitalWorld from "./js/drag-drop/digital-world.js";
 
 const preloader = new Preloader();
 const intro = new Intro();
-const magic_crayon = new Pencil();
 const world = new DigitalWorld();
+const magic_pencil = new Pencil();
+const eraseBtn = document.getElementById("erase-btn");
+
+eraseBtn.addEventListener("click", () => {
+    world.deleteBodies();
+    magic_pencil.deleteShapes();
+});
 
 window.setup = (event) => createCanvas(windowWidth, windowHeight);
 
@@ -24,5 +30,5 @@ window.windowResized = (event) => {
 window.draw = (event) => {
     background(255); // Limpiar el canvas
     world.update(); // Actualizar el motor de Matter.js
-    magic_crayon.draw(world.bodies); // Dibujar los trazos
+    magic_pencil.draw(world.bodies); // Dibujar los trazos
 };
