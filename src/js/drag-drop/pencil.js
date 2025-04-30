@@ -5,6 +5,8 @@ export default class Pencil {
         this.shapes = []; // Lista de trazos (Shape)
         this.active_shape = null; // Trazo activo
         this.fillColor = "#000000"; // Color de relleno por defecto
+        this.undoBtn = document.getElementById("undo-btn");
+        this.toggleStrokeBtn = document.getElementById("toggle-stroke-btn");
         this.redoBtn = document.getElementById("redo-btn");
         this.eraseBtn = document.getElementById("erase-btn");
         this.colorLabel = document.querySelector("label#color-label");
@@ -29,6 +31,14 @@ export default class Pencil {
             console.log("event", event)
             this.updateColor(event)
         });
+        // Evento para hacer toggle del stroke
+        this.toggleStrokeBtn.addEventListener("click", () => this.toggleStroke());
+    }
+
+    /* Alterna entre stroke y noStroke para los shapes */
+    toggleStroke() {
+        this.strokeEnabled = !this.strokeEnabled; // Cambiar el estado de stroke
+        console.log(`Stroke ${this.strokeEnabled ? "habilitado" : "deshabilitado"}`);
     }
 
     updateColor(event) {

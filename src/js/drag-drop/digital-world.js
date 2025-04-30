@@ -8,8 +8,6 @@ export default class DigitalWorld {
         this.engine = Matter.Engine.create();
         this.world = this.engine.world;
         this.bodies = []; // Lista de cuerpos rígidos
-        this.ground = null; // Suelo del mundo físico
-        // this.engine.world.gravity.y = 0.5; // Gravedad inicial
         // Configurar el renderizador (opcional)
         this.render = Matter.Render.create({
             element: document.body,
@@ -97,7 +95,7 @@ export default class DigitalWorld {
         // Calcular el área del cuerpo
         const area = this.calculatePolygonArea(vertices);
         // Ajustar propiedades físicas según el área
-        const density = 2 * area; // Densidad proporcional al área
+        const density = 10 * area; // Densidad proporcional al área
         const restitution = Math.max(0.1, 1 - area / 10000); // Menor restitución para áreas grandes
         const friction = Math.min(1, 0.1 + area / 5000); // Mayor fricción para áreas grandes
 
