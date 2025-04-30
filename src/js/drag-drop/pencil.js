@@ -23,6 +23,7 @@ export default class Pencil {
         window.mouseReleased = () => this.endShape();
 
         // Eventos personalizados
+        this.undoBtn.addEventListener("click", () => this.undo());
         this.redoBtn.addEventListener("click", () => this.redo());
         this.eraseBtn.addEventListener("click", () => this.erase());
 
@@ -35,18 +36,6 @@ export default class Pencil {
         this.toggleStrokeBtn.addEventListener("click", () => this.toggleStroke());
     }
 
-    /* Alterna entre stroke y noStroke para los shapes */
-    toggleStroke() {
-        this.strokeEnabled = !this.strokeEnabled; // Cambiar el estado de stroke
-        console.log(`Stroke ${this.strokeEnabled ? "habilitado" : "deshabilitado"}`);
-    }
-
-    updateColor(event) {
-        this.fillColor = event.target.value; // Actualizar el color de relleno
-        console.log("Nuevo color de relleno:", this.fillColor);
-        this.colorLabel.style.backgroundColor = this.fillColor;
-    }
-
     /* Inicia un nuevo trazo. */
     startShape() {
         const footer = document.querySelector('#main-footer'); // Seleccionar el footer
@@ -54,7 +43,10 @@ export default class Pencil {
 
         if (!isFooterHovered) {
             // Inicializar una nueva forma si el cursor no está sobre el footer
-            this.active_shape = new Shape();
+            this.active_shape = new Shape({
+                fillColor: this.fillColor,
+                strokeColor: this.strokeEnabled ? 'black' : null, // Asignar stroke según el estado
+            });
             this.active_shape.fillColor = this.fillColor; // Asignar el color actual al nuevo shape
             this.shapes.push(this.active_shape);
         }
@@ -129,11 +121,6 @@ export default class Pencil {
         });
     }
 
-    /* Borra todos los trazos. */
-    erase() {
-        this.shapes = [];
-    }
-
     /**
      * Dibuja todos los trazos en el canvas.
      * @param {Array} bodies - Lista de cuerpos de Matter.js.
@@ -144,10 +131,38 @@ export default class Pencil {
         this.shapes.forEach((shape, i) => shape.draw(time + i)); // Dibujar los shapes
     }
 
+    // button events
     /**
-     * Implementa la lógica de rehacer (pendiente).
+     * Lógica de deshacer
+     */
+    undo() {
+        // Implementar lógica de rehacer
+    }
+    /**
+     * Lógica de rehacer/repetir
      */
     redo() {
         // Implementar lógica de rehacer
+    }
+    /* Borra todos los trazos. */
+    erase() {
+        this.shapes = [];
+    }
+    
+    /* Alterna entre stroke y noStroke para los shapes */
+    toggleStroke() {
+        this.strokeEnabled = !this.strokeEnabled; // Cambiar el estado de stroke
+        console.log(`Stroke ${this.strokeEnabled ? "habilitado" : "deshabilitado"}`);
+        if (this.strokeEnabled) {
+            this.toggleStrokeBtn.classList.add("active"); // Añadir clase activa al botón
+        } else {
+            this.toggleStrokeBtn.classList.remove("active"); // Remover clase activa del botón
+        }
+    }
+
+    updateColor(event) {
+        this.fillColor = event.target.value; // Actualizar el color de relleno
+        console.log("Nuevo color de relleno:", this.fillColor);
+        this.colorLabel.style.backgroundColor = this.fillColor;
     }
 }
