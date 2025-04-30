@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: './', // Usar rutas relativas
+  base: '/brush-p5', // Usar rutas relativas
   build: {
     rollupOptions: {
       input: {
