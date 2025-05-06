@@ -8,7 +8,7 @@ export default defineConfig({
       input: {
         main: './index.html',
         crayon: './crayon.html',
-        challenge: './challenge.html',
+        draw_drop: './draw-drop.html',
         circles: './circles.html',
         light: './light.html',
       },
