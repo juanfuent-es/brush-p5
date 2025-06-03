@@ -66,6 +66,7 @@ export default class DigitalWorld {
 
         window.addEventListener("finishShape", (event) => {
             const shape = event.detail.shape;
+            console.log("shape", shape);
             if (shape) {
                 const body = this.createBody(shape.points);
                 shape.setBody(body); // Asignar el cuerpo al shape

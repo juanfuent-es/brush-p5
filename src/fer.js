@@ -1,11 +1,12 @@
-import Puzzle from "./js/glass/puzzle.js";
+import Glass from "./js/glass/glass.js";
 import DigitalWorld from "./js/glass/digital-world.js";
 
 const digital_world = new DigitalWorld();
-const puzzle = new Puzzle(digital_world.world);
+const glass = new Glass(digital_world.world);
 
 window.setup = (event) => {
     createCanvas(windowWidth, windowHeight);
+    glass.initShapesFromSVG();
 }
 
 // Redimensionar el canvas y el renderizador de Matter.js
@@ -18,10 +19,5 @@ window.windowResized = (event) => {
 window.draw = (event) => {
     background(255); // Limpiar el canvas
     digital_world.update(); // Actualizar el motor de Matter.js
-    puzzle.draw(digital_world.bodies); // Dibujar los trazos
+    glass.draw(digital_world.bodies); // Dibujar los trazos
 };
-
-function deleteBodies() {
-    digital_world.deleteBodies();
-    puzzle.deleteShapes();
-}

@@ -1,8 +1,8 @@
 export default class Shape {
     constructor(args={}) {
         this.points = []; // Lista de puntos del trazo
-        this.strokeColor = args.strokeColor || 'white';
-        this.fillColor = args.fillColor || 'red';
+        this.strokeColor = 'white';
+        this.fillColor = 'red';
         this.body = null;
     }
 
@@ -16,11 +16,7 @@ export default class Shape {
 
     draw(t) {
         fill(this.fillColor);
-        if (this.strokeColor) {
-            stroke(this.strokeColor);
-        } else {
-            noStroke();
-        }
+        stroke(this.strokeColor);
         beginShape();
         this.points.forEach(p => vertex(p.x, p.y));
         endShape(CLOSE);

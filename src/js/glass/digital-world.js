@@ -23,6 +23,7 @@ export default class DigitalWorld {
         Matter.Render.run(this.render);
         this.setupEvents();
         this.styleCanvas();
+        this.updateGravity(0);
     }
     
     styleCanvas() {        
