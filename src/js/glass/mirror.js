@@ -85,7 +85,7 @@ export default class Mirror {
             },
         );
         
-
+        console.log("body", body);
         if (body) {
             console.log("Propiedades físicas asignadas:", {
                 density,
