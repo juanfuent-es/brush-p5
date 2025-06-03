@@ -1,7 +1,7 @@
 import Matter from "matter-js";
 import decomp from "poly-decomp"; // Importar poly-decomp
 
-export default class DigitalWorld {
+export default class Mirror {
     constructor() {
         Matter.Common.setDecomp(decomp);
         // Crear el motor y el mundo de Matter.js
@@ -23,7 +23,7 @@ export default class DigitalWorld {
         Matter.Render.run(this.render);
         this.setupEvents();
         this.styleCanvas();
-        this.updateGravity(0);
+        // this.updateGravity(0.9);
     }
     
     styleCanvas() {        

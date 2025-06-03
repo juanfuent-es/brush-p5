@@ -72,6 +72,19 @@ export default class Glass {
             console.error('SVG element #glass-puzzle not found');
             return;
         }
+        // 1. Obtener viewBox o width/height
+        const viewBox = svg.getAttribute('viewBox');
+        let svgWidth, svgHeight, svgX = 0, svgY = 0;
+        if (viewBox) {
+            [svgX, svgY, svgWidth, svgHeight] = viewBox.split(' ').map(Number);
+        } else {
+            svgWidth = svg.width.baseVal.value;
+            svgHeight = svg.height.baseVal.value;
+        }
+        // 2. Calcular el factor de escala
+        const scaleX = windowWidth / svgWidth;
+        const scaleY = windowHeight / svgHeight;
+        // 3. Procesar cada figura y escalar sus puntos
         const elements = svg.querySelectorAll('path, polygon, polyline');
         elements.forEach((el) => {
             let points = [];
@@ -81,21 +94,28 @@ export default class Glass {
             } else if (el.tagName.toLowerCase() == 'polygon' || el.tagName.toLowerCase() == 'polyline') {
                 const pointsAttr = el.getAttribute('points');
                 if (pointsAttr) {
-                    points = pointsAttr.trim().split(/\s+/).map(pair => {
-                        const [x, y] = pair.split(',').map(Number);
-                        return { x, y };
-                    });
+                    const nums = pointsAttr.trim().split(/[\s,]+/).map(Number);
+                    points = [];
+                    for (let i = 0; i < nums.length; i += 2) {
+                        if (!isNaN(nums[i]) && !isNaN(nums[i+1])) {
+                            points.push({ x: nums[i], y: nums[i+1] });
+                        }
+                    }
                 }
             }
             if (points.length >= 3) {
+                // Escalar los puntos
+                const scaledPoints = points.map(p => ({
+                    x: (p.x - svgX) * scaleX,
+                    y: (p.y - svgY) * scaleY
+                }));
                 const shape = new Shape();
-                shape.points = points.map(p => ({ x: p.x, y: p.y }));
+                shape.points = scaledPoints;
                 this.shapes.push(shape);
-                this.dispatchFinishShapeEvent(shape);
-                console.log("points", this.shapes);
+                console.log("points", scaledPoints)
+                this.dispatchFinishShapeEvent(shape); // El listener externo creará el body
             }
         });
-
     }
 
     pathToPoints(d) {

@@ -1,8 +1,8 @@
 import Glass from "./js/glass/glass.js";
-import DigitalWorld from "./js/glass/digital-world.js";
+import Mirror from "./js/glass/mirror.js";
 
-const digital_world = new DigitalWorld();
-const glass = new Glass(digital_world.world);
+const mirror = new Mirror();
+const glass = new Glass(mirror.world);
 
 window.setup = (event) => {
     createCanvas(windowWidth, windowHeight);
@@ -12,12 +12,12 @@ window.setup = (event) => {
 // Redimensionar el canvas y el renderizador de Matter.js
 window.windowResized = (event) => {
     resizeCanvas(windowWidth, windowHeight);
-    digital_world.resize(windowWidth, windowHeight); // Crear el suelo nuevamente
+    mirror.resize(windowWidth, windowHeight); // Crear el suelo nuevamente
 };
 
 // Dibujar en cada frame
 window.draw = (event) => {
     background(255); // Limpiar el canvas
-    digital_world.update(); // Actualizar el motor de Matter.js
-    glass.draw(digital_world.bodies); // Dibujar los trazos
+    mirror.update(); // Actualizar el motor de Matter.js
+    glass.draw(mirror.bodies); // Dibujar los trazos
 };
